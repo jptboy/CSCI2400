@@ -346,7 +346,13 @@ int addOK(int x, int y) {
  *   Rating: 3
  */
 int conditional(int x, int y, int z) {
-  return 2;
+    int mask = 0;
+    int res = 0;
+    
+    
+    mask = !x + ~(0);/*0 if false 1111....1111 if true*/
+    res = (~(mask)&z) | ((mask)& y);/*not mask and z  will give you y straight up if x is true, and z if x is false*/
+  return res;
 }
 /* 
  * isAsciiDigit - return 1 if 0x30 <= x <= 0x39 (ASCII codes for characters '0' to '9')
@@ -358,6 +364,7 @@ int conditional(int x, int y, int z) {
  *   Rating: 3
  */
 int isAsciiDigit(int x) {
+    
   return 2;
 }
 /* 
