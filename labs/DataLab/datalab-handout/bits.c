@@ -364,10 +364,33 @@ int conditional(int x, int y, int z) {
  *   Rating: 3
  */
 int isAsciiDigit(int x) {
+    int bitgetter1 = 0x30;
+    int bitgetter2 = 0;
+    int zer0 = 0;
+    int answer = 0;
+    int ander = 0;
+    int neg = 0;
+    int others = x& ~(63);
+
+    ander = x&0x30;
     
-  return 2;
-}
-/* 
+    bitgetter1 = (ander^bitgetter1);/*if it is 0x30 then this will be 1 otherwise itll be 0*/
+  
+    
+    
+    bitgetter2 = x&15;
+    
+    bitgetter2 = 10 + ((~bitgetter2) + 1);/*<=0 if false >0 if true*/
+    zer0 = !(0^bitgetter2);/* 0 if 0 otherwise a number*/
+    neg = bitgetter2 >>31;//bad if not 0
+
+
+    
+    answer = (others + bitgetter1 + neg + zer0);
+    
+    return !(answer);
+    
+}/* 
  * replaceByte(x,n,c) - Replace byte n in x with c
  *   Bytes numbered from 0 (LSB) to 3 (MSB)
  *   Examples: replaceByte(0x12345678,1,0xab) = 0x1234ab78
