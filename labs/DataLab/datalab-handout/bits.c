@@ -400,7 +400,23 @@ int isAsciiDigit(int x) {
  *   Rating: 3
  */
 int replaceByte(int x, int n, int c) {
-  return 2;
+    
+    int masker = 0xff;
+    int byter = 0;
+    n = n << 3;
+    masker = masker << n;
+    byter = x&masker;
+    
+    x = x^byter;
+    
+    c = c << n;
+    
+    x = x|c;
+    
+    
+    
+    
+  return x;
 }
 /* reverseBits - reverse the bits in a 32-bit integer,
               i.e. b0 swaps with b31, b1 with b30, etc
@@ -427,8 +443,48 @@ int reverseBits(int x) {
  *   Max ops: 30
  *   Rating: 4
  */
-int satAdd(int x, int y) {
-  return 2;
+int satAdd(int x2, int y2) {
+       /*return int max if  positive overflow(add two +) and int min if negative overflow*/
+    int boolean = 0;
+    int x = x2;
+    int y = y2;
+    int maker = 0;
+    int bitgetter = 0;
+    int z = 0;
+    int zgetter = 0;
+    int booler = 0;
+    int mask = 0;
+    int negatoor = 1<<31;
+    int res = 0;
+    int bitgetter2 = 0;
+
+    boolean = !((x^y) >> 31);
+    maker = ~(boolean) + 1;
+
+    x = x & maker;
+    y = y & maker;
+
+    bitgetter = ((x&(negatoor)) >> 31);/* zero if + 1 if negative*/
+    bitgetter2 = bitgetter;
+    bitgetter = bitgetter&1;
+
+    z = x+y;
+
+    zgetter = ((z&(1 << 31)) >> 31) & 1;
+
+    booler = !(bitgetter^zgetter);/*1 means no overflow, 0 means overflow*/
+
+    /*--*/
+    booler = !booler;
+    
+    
+    mask = !booler + ~(0);/*0 if false 1111....1111 if true*/
+    res = (~(mask)&(x2+y2)) | ((mask)& (bitgetter2^(~negatoor)));/*not mask and z  will give you y straight up if x is true, and z if x is false*/
+    /* if x y otherwise z */
+    
+    
+    
+    return res;
 }
 /*
  * Extra credit
