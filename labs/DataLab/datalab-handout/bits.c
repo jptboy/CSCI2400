@@ -311,10 +311,31 @@ int byteSwap(int x, int n, int m) {
  *   Rating: 3
  */
 int addOK(int x, int y) {
-    int z = 0;
-    z = x+y;
     
-    return 1;
+    
+   
+    int boolean = 0;
+    int maker = 0;
+    int bitgetter = 0;
+    int z = 0;
+    int zgetter = 0;
+    int booler = 0;
+
+    boolean = !((x^y) >> 31);
+    maker = ~(boolean) + 1;
+
+    x = x & maker;
+    y = y & maker;
+
+    bitgetter = ((x&(1 << 31)) >> 31) & 1;
+
+    z = x+y;
+
+    zgetter = ((z&(1 << 31)) >> 31) & 1;
+
+    booler = bitgetter^zgetter;
+
+    return !booler;
     
 }
 /* 
