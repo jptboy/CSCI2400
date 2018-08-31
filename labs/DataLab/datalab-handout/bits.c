@@ -431,7 +431,76 @@ int replaceByte(int x, int n, int c) {
  *  Rating: 4
  */
 int reverseBits(int x) {
-  return 0;
+    int masker = 0;
+    int masker2 = 0;
+    int evenbits = 0;
+    int oddbits = 0;
+    int negator = 1<<31;
+    int newnum = 0;
+
+    int twobyte = 0;
+    int firstbyte = 0;
+    int secbite = 0;
+    int firsbite = 0;
+    
+    int nibb1 = 0;
+    int nibb2 = 0;
+    int nibb3 = 0;
+    int nibb4 = 0;
+    int nibb5 = 0;
+    int nibb6 = 0;
+    int nibb7 = 0;
+    int nibb8 = 0;
+    int nibbmask = 0xf;
+    /*--*/
+    masker = ((0x55 << 8)+0x55);
+    masker = (masker << 16)+masker;
+    masker2 = masker << 1;
+
+    evenbits = x & masker;
+    evenbits = evenbits<<1;
+    oddbits = x & masker2;
+    oddbits = (oddbits >> 1)&(~negator);
+
+    newnum = evenbits | oddbits;
+    /*--*/
+
+    twobyte = (0x33 << 8)+0x33;
+    twobyte = (twobyte << 16) + twobyte;
+    firstbyte = twobyte << 2;
+
+    secbite = newnum&twobyte;
+    secbite = secbite << 2;
+    firsbite = newnum&firstbyte;
+    firsbite = (firsbite >> 2) &(~(negator >> 1));
+
+    newnum = firsbite | secbite;
+
+    /*--*/
+    nibb1 = (nibbmask << 0) & newnum;
+    nibb2 = (nibbmask << 4) & newnum;
+    nibb3 = (nibbmask << 8) & newnum;
+    nibb4 = (nibbmask << 12) & newnum;
+    nibb5 = (nibbmask << 16) & newnum;
+    nibb6 = (nibbmask << 20) & newnum;
+    nibb7 = (nibbmask << 24) & newnum;
+    nibb8 = (nibbmask << 28) & newnum;
+
+    nibb1 = nibb1 << 28;
+    nibb2 = nibb2 << 20;
+    nibb3 = nibb3 << 12;
+    nibb4 = nibb4 << 4;
+
+    nibb5 = (nibb5 >> 4) & (~(negator>>15));
+    nibb6 = (nibb6 >> 12) & (~(negator>>19));
+    nibb7 = (nibb7 >> 20) & (~(negator>>23));
+    nibb8 = (nibb8 >> 28) & (~(negator>>27));
+
+    newnum = nibb1 | nibb2 | nibb3 |nibb4 | nibb5 | nibb6 | nibb7 |nibb8;
+
+    
+    
+  return newnum;
 }
 /*
  * satAdd - adds two numbers but when positive overflow occurs, returns
